@@ -1,0 +1,11 @@
+name: admix
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.7
+  - pylint
+  - pip
+  - pre-commit
+  - pytest
+  - numpy
