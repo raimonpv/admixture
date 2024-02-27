@@ -40,7 +40,7 @@ help:
 setup:
 	@echo Setting up the repo
 	$(MAKE) create_env
-	${ENV_RUN} $(MAKE) install_requirements
+	${ENV_RUN} $(MAKE) install_module
 	${ENV_RUN} $(MAKE) install_hooks
 
 create_env:
@@ -52,9 +52,8 @@ install_hooks:
 	@pre-commit install
 	@pre-commit install --hook-type commit-msg
 
-install_requirements:
-	@echo Installing from requirements.txt...
-	@pip install -r requirements.txt
+install_module:
+	@echo Installing Admixture module...
 	@pip install -e .
 
 clean:
