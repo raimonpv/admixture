@@ -24,8 +24,8 @@ ignore-docstrings="yes"
 ignore-imports="yes"
 
 [tool.pylint.'BASIC']
-argument-rgx="([a-z_][a-z0-9_]{2,30})|tm$"     # snake_case + tm
-variable-rgx="([a-z_][a-z0-9_]{2,30})|tm$"     # snake_case + tm
+argument-rgx="([a-z0-9_]{2,30})$"     # snake_case
+variable-rgx="([a-z0-9_]{2,30})$"     # snake_case
 const-rgx="([^\\W\\da-z][^\\Wa-z]*|__.*__|name)$"  # UPPER_CASE + name
 
 [tool.pylint.'FORMAT']
