@@ -1,22 +1,80 @@
-import csv
+# Imports: standard library
 import os
+from typing import List, Tuple
 
-def check_file(data_file_name):
-    if not os.path.exists(data_file_name):
-        raise FileNotFoundError(f"{data_file_name} does not exist.")
+# Imports: third party
+import pandas as pd
 
-def ancestry(file_path):
-    check_file(file_path)
 
-    processed_data = {}
-    with open(file_path, 'r') as file:
-        data = filter(lambda row: len(row) == 5 and row[-1] in ['A', 'T', 'G', 'C'], csv.reader(file, delimiter='\t'))
-        processed_data = {row[0]: ''.join(row[-2:]) for row in data}
+def load_model(model: str) -> Tuple[pd.DataFrame, List[str]]:
+    if model == "1000Genomes_superpopulation":
+        alleles_path = "1000Genomes.alleles"
+        freq_path = "1000Genomes_superpopulation.F"
+        pops = ["EUR", "EAS", "AMR", "SAS", "AFR"]
+    elif model == "1000Genomes_population":
+        alleles_path = "1000Genomes.alleles"
+        freq_path = "1000Genomes_population.F"
+        pops = [
+            "FIN",
+            "GBR",
+            "CHS",
+            "PUR",
+            "CDX",
+            "CLM",
+            "IBS",
+            "KHV",
+            "PEL",
+            "PJL",
+            "ACB",
+            "GWD",
+            "ESN",
+            "BEB",
+            "MSL",
+            "ITU",
+            "STU",
+            "CEU",
+            "YRI",
+            "CHB",
+            "JPT",
+            "LWK",
+            "MXL",
+            "ASW",
+            "TSI",
+            "GIH",
+        ]
+    elif model == "K7b":
+        alleles_path = "K7b.alleles"
+        freq_path = "K7b.7.F"
+        pops = [
+            "South Asian",
+            "West Asian",
+            "Siberian",
+            "African",
+            "Southern",
+            "Atlantic Baltic",
+            "East Asian",
+        ]
+    else:
+        raise ValueError(f"Unkown model {model}")
+    model_path = os.path.dirname(os.path.realpath(__file__)) + "/models"
+    alleles = pd.read_csv(
+        os.path.join(model_path, alleles_path),
+        delim_whitespace=True,
+        header=None,
+    )
+    frequencies = pd.read_csv(
+        os.path.join(model_path, freq_path),
+        delim_whitespace=True,
+        header=None,
+    )
+    if model == "1000Genomes_population":
+        frequencies = frequencies.iloc[:, :-4]
+    alleles.columns = ["rsid", "ref", "alt"]
+    return pd.concat([alleles, frequencies], axis=1), pops
 
-    return processed_data
 
-def twenty_three(file_path):
-    pass
-
-def thousand_genomes():
-    pass
+def twenty_three(file_path: str) -> pd.DataFrame:
+    df = pd.read_csv(file_path, sep="\t", comment="#", header=None, low_memory=False)
+    df = df[[0, 3]]
+    df.columns = ["rsid", "genotype"]
+    return df

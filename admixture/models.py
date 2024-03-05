@@ -10,18 +10,6 @@ from tqdm import tqdm
 # pylint: disable=too-many-branches
 
 
-def k7b():
-    return [
-        "South Asian",
-        "West Asian",
-        "Siberian",
-        "African",
-        "Southern",
-        "Atlantic Baltic",
-        "East Asian",
-    ]
-
-
 def generate_1000genomes_model(input_folder: str, output_folder: str):
     """
     Given the 1000 Geneomes pruned VCF files, generate an admixture model.

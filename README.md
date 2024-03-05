@@ -24,7 +24,7 @@ Follow these steps to install `Admixture`:
 ### Usage
 Usage may vary depending on use case. An example usage is provided below:
 ```python
-python admixture.py -m k7b -i data/test.vcf -o results/test.png
+python admixture.py -m k7b -i ./sample-data/1.txt -o ./results
 ```
 
 ## Contributing
