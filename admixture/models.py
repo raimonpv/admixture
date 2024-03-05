@@ -61,7 +61,11 @@ def generate_1000genomes_model(input_folder: str, output_folder: str):
 
     for chrom in range(1, 23):
         print(f"Extracting stats for snps in chromosome {chrom}...")
-        with open(file_name.replace("{chrom}", str(chrom)), "r") as file:
+        with open(
+            file_name.replace("{chrom}", str(chrom)),
+            "r",
+            encoding="utf-8",
+        ) as file:
             parse = False
             for line in tqdm(file):
                 if line.startswith("#CHROM"):
