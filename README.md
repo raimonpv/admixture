@@ -2,7 +2,7 @@
 
 `Admixture` is a Python-based command-line interface designed to compute genetic admixture from SNP data. This tool simplifies the process of determining the proportionate ancestry in individuals from multiple source populations using genotype data from one of several consumer genotyping companies. Additionally, the software provides a detailed visualization functionality of ancestry breakdown. Several models are supported, and guidance is provided for users to define their own models.
 
-Companion code to the Final project for CSE 284 (WI24) authored by Raimon Padrós I Valls (A59025488) and Lucas Patel (A13041630); Group 21.
+This is companion code to the final project for CSE 284 (WI24) authored by **Raimon Padrós I Valls** (A59025488) and **Lucas Patel** (A13041630) of **Group 21**.
 
 ## Getting Started
 
