@@ -22,12 +22,29 @@ Follow these steps to install `Admixture`:
     ```bash
     make setup
     ```
+3. Finally, activate the conda environment:
+   ```bash
+   conda activate admix
+   ```
 
-### Usage
+## Usage
 Usage may vary depending on use case. An example usage is provided below:
 ```python
 python admixture.py -m k7b -i ./sample-data/1.txt -o ./results
 ```
+
+## Development
+Currently, the package offers two models: [k7b](http://dodecad.blogspot.com/2012/01/k12b-and-k7b-calculators.html) and a model we inferred manually using SNP data from the [1000Genomes project](https://www.internationalgenome.org). Development is ongoing. Details on specific files and functions are available [here](https://github.com/raimonpv/admixture/tree/main/admixture).
+
+### Tasks:
+- [x] Configure initial tool
+- [x] Configure environment
+- [x] Build READMEs
+- [x] Implement initial model
+- [x] Implement 1000Genomes model
+- [ ] Implement visualization
+- [x] Provide sample data
+- [x] Publish repository
 
 ## Contributing
 We welcome contributions from the community. If you're interested in improving `Admixture`, please follow these steps:
@@ -46,4 +63,5 @@ This project is licensed under the MIT License. For more details, see the `LICEN
 Special thanks to the many contributors and the broader community of geneticists and bioinformaticians whose insights and feedback have made the development of `Admixture` possible.
 
 Credit is given to the following authors:
-* []()
+* [stevenliuyi](https://github.com/stevenliuyi) - For providing the initial [k7b](http://dodecad.blogspot.com/2012/01/k12b-and-k7b-calculators.html) model
+* [David Alexander](https://dalexander.github.io/admixture/contact.html) - For initial implementation of [ADMIXTURE](https://dalexander.github.io/admixture/index.html)
