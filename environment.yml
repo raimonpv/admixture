@@ -9,3 +9,6 @@ dependencies:
   - pre-commit
   - pytest
   - numpy
+  - pandas
+  - tqdm
+  - scipy
