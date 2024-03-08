@@ -16,7 +16,7 @@ Follow these steps to install `Admixture`:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/YourUsername/AdmixtureAnalysisTool.git
+    git clone https://github.com/raimonpv/admixture
     ```
 2. Next, configure the conda environment and other dependencies as follows:
     ```bash
@@ -30,7 +30,7 @@ Follow these steps to install `Admixture`:
 ## Usage
 Usage may vary depending on use case. An example usage is provided below:
 ```python
-python admixture.py -m k7b -i ./sample-data/1.txt -o ./results
+python admixture.py -m K7b -i ./sample-data/1.txt -o ./results
 ```
 
 ## Development
