@@ -1,6 +1,7 @@
 # Imports: standard library
 import os
 import typing
+from typing import List, Optional
 from collections import Counter
 
 # Imports: third party
@@ -10,36 +11,29 @@ from tqdm import tqdm
 # pylint: disable=too-many-branches
 
 
-def k7b():
-    return [
-        "South Asian",
-        "West Asian",
-        "Siberian",
-        "African",
-        "Southern",
-        "Atlantic Baltic",
-        "East Asian",
-    ]
-
-
-def generate_1000genomes_model(input_folder: str, output_folder: str):
+def generate_1000genomes_model(
+    input_folder: str,
+    output_folder: str,
+    chromosomes: Optional[List[int]] = None,
+):
     """
     Given the 1000 Geneomes pruned VCF files, generate an admixture model.
     The input folder should contain the 'igsr_samples.tsv' with the population and
     superpopulation of each sample and one vcf file per chromosome with the following
     naming convention '1000G_chr{chrom}_pruned.vcf'. An admixture model for the 1000G
-    populations ('1000Genomes_population.T') and another one for the superpopulations
-    ('1000Genomes_superpopulation.T') will be generated in the ouput_folder.
-    Additionally, a file called '1000Genomes.alleles' containing all the rsids,
-    the reference and the alternate alleles for each SNP is also generated.
-    In '1000Genomes_population.T' the alternate allele frequency for each population for
-    each SNP is provided.
-    In '1000Genomes_superpopulation.T' the alternate allele frequency for each
-    superpopulation for each SNP is provided.
+    populations ('1000Genomes_pop.txt') and another one for the superpopulations
+    ('1000Genomes_superpop.txt') will be generated in the ouput_folder.
+    The files contain all the rsids, the reference and the alternate alleles, as well
+    as the alternate allele frequency for each population for each SNP is provided.
 
     :param input_folder: <str> Path to folder with pruned .vcf files.
     :param output_folder: <str> Path to folder to store resulting models.
+    :param chromosomes: <List[str]> List of chromosomes to use to create the model.
+                                    If None, all chromosomes will be used. Default: None
     """
+    if chromosomes is None:
+        chromosomes = list(range(1, 23))
+
     file_name = os.path.join(input_folder, "1000G_chr{chrom}_pruned.vcf")
     sample_pop_df = pd.read_csv(
         os.path.join(input_folder, "igsr_samples.tsv"),
@@ -49,19 +43,23 @@ def generate_1000genomes_model(input_folder: str, output_folder: str):
     keys = sample_pop_df["Sample name"]
     values = sample_pop_df["Population code"]
     sample_pop = dict(zip(keys, values))
-    pops = values.dropna().unique()
+    pops = values.dropna().unique()[:-1]
 
     values = sample_pop_df["Superpopulation code"]
     sample_superpop = dict(zip(keys, values))
-    superpops = values.dropna().unique()
+    superpops = values.dropna().unique()[:-1]
 
     alleles = []
     pop_freq = []
     superpop_freq = []
 
-    for chrom in range(1, 23):
+    for chrom in chromosomes:
         print(f"Extracting stats for snps in chromosome {chrom}...")
-        with open(file_name.replace("{chrom}", str(chrom)), "r") as file:
+        with open(
+            file_name.replace("{chrom}", str(chrom)),
+            "r",
+            encoding="utf-8",
+        ) as file:
             parse = False
             for line in tqdm(file):
                 if line.startswith("#CHROM"):
@@ -108,24 +106,18 @@ def generate_1000genomes_model(input_folder: str, output_folder: str):
                             row.append(superpop_counter[pop] / n_superpop_counter[pop])
                     superpop_freq.append(row)
 
-    df = pd.DataFrame(superpop_freq)
+    alleles = pd.DataFrame(alleles, columns=["rsid", "ref", "alt"])
+    frequencies = pd.DataFrame(superpop_freq, columns=superpops)
+    df = pd.concat([alleles, frequencies], axis=1)
     df.to_csv(
-        os.path.join(output_folder, "1000Genomes_superpopulation.T"),
+        os.path.join(output_folder, "1000Genomes_superpop.txt"),
         sep=" ",
         index=False,
-        header=False,
     )
-    df = pd.DataFrame(pop_freq)
+    frequencies = pd.DataFrame(pop_freq, columns=pops)
+    df = pd.concat([alleles, frequencies], axis=1)
     df.to_csv(
-        os.path.join(output_folder, "1000Genomes_population.T"),
+        os.path.join(output_folder, "1000Genomes_pop.txt"),
         sep=" ",
         index=False,
-        header=False,
-    )
-    df = pd.DataFrame(alleles)
-    df.to_csv(
-        os.path.join(output_folder, "1000Genomes.alleles"),
-        sep=" ",
-        index=False,
-        header=False,
     )

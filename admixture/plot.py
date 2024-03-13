@@ -1,57 +1,38 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
+# Imports: standard library
+import os
+from typing import Optional
 
-def generate_admixture_plot(data):
+# Imports: third party
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+def generate_admixture_plot(data: pd.DataFrame, output_path: Optional[str] = None):
     """
     Generate an admixture plot from the given data.
-
-    Args:
-    - data: A 2D numpy array of shape (N, M) where N is the number of samples
-            and M is the number of distinct populations. Each element represents
-            the proportional contribution of each population to the samples.
-
     The function generates a stacked bar chart where each bar represents a sample
     and the segments of the bar represent the contributions from different populations.
+
+    :param data: <pd.DataFrame> Pandas DataFrame where each row represents the
+                                proportional contribution of each population to the
+                                samples in the index.
+    :param output_path: <str> Folder where to save the resulting figure.
     """
     # Set seaborn style for better aesthetics
     sns.set(style="whitegrid")
 
-    # Number of samples and populations
-    num_samples, num_populations = data.shape
+    _fig, ax = plt.subplots(figsize=(10, 3))
 
-    # Sort samples by the first population's contribution for visual clarity
-    # This can be adjusted based on the desired sorting criteria
-    sorted_indices = np.argsort(data[:, 0])
-    sorted_data = data[sorted_indices]
+    data.plot.bar(stacked=True, ax=ax, width=1)
 
-    # Create figure and axis for the plot
-    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.yaxis.set_ticks_position("left")
+    ax.xaxis.set_ticks_position("bottom")
+    ax.set_xticklabels(data.index)
 
-    # Plot each population's contribution per sample as a stacked bar
-    bottoms = np.zeros(num_samples)
-    for i in range(num_populations):
-        ax.bar(range(num_samples), sorted_data[:, i], bottom=bottoms, edgecolor='white')
-        bottoms += sorted_data[:, i]
-
-    # Customize the plot to make it more informative
-    ax.set_xlabel('Sample')
-    ax.set_ylabel('Population Contribution')
-    ax.set_title('Admixture Plot')
-    ax.set_xticks([])  # Remove x-axis tick marks for clarity
-
-    # Show the plot
     plt.tight_layout()
     plt.show()
-
-# Example usage
-# Create a dummy data array for demonstration purposes
-N, M = 50, 5  # 50 samples, 5 distinct populations
-np.random.seed(42)  # For reproducible results
-data = np.random.dirichlet(alpha=[1]*M, size=N)  # Generate random proportions
-
-generate_admixture_plot(data)
-
-# Specify the output file path and name
-output_file = "admixture_plot.png"
-generate_admixture_plot(data, output_file)
+    if output_path is not None:
+        plt.savefig(os.path.join(output_path, "ancestry.pdf"))

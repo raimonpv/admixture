@@ -12,3 +12,6 @@ dependencies:
   - pandas
   - tqdm
   - scipy
+  - seaborn
+  - matplotlib
+  - memory_profiler
