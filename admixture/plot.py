@@ -33,6 +33,6 @@ def generate_admixture_plot(data: pd.DataFrame, output_path: Optional[str] = Non
     ax.set_xticklabels(data.index)
 
     plt.tight_layout()
-    plt.show()
     if output_path is not None:
         plt.savefig(os.path.join(output_path, "ancestry.pdf"))
+    plt.show()

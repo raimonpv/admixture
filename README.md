@@ -36,13 +36,20 @@ python admixture.py -m K7b -i ./sample-data/1.txt -o ./results
 ## Development
 Currently, the package offers two models: [k7b](http://dodecad.blogspot.com/2012/01/k12b-and-k7b-calculators.html) and a model we inferred manually using SNP data from the [1000Genomes project](https://www.internationalgenome.org). Development is ongoing. Details on specific files and functions are available [here](https://github.com/raimonpv/admixture/tree/main/admixture).
 
+## Troubleshooting
+> I'm having trouble with the `make setup` command. Specifically, my terminal just says "Solving Environment" and never finishes!
+This is a well-known problem with conda. If you have [mamba](https://mamba.readthedocs.io/en/latest/) installed, you can try directly configuring the environment:
+```bash
+mamba env create --name admix -f environment.yml
+```
+
 ### Tasks:
 - [x] Configure initial tool
 - [x] Configure environment
 - [x] Build READMEs
 - [x] Implement initial model
 - [x] Implement 1000Genomes model
-- [ ] Implement visualization
+- [x] Implement visualization
 - [x] Provide sample data
 - [x] Publish repository
 
