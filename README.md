@@ -28,9 +28,24 @@ Follow these steps to install `Admixture`:
    ```
 
 ## Usage
-Usage may vary depending on use case. An example usage is provided below:
+Usage may vary depending on use case. Main usage entails executing the script `admixture.py`. An example usage is provided below:
+
 ```python
 python admixture.py -m K7b -i ./sample-data/1.txt -o ./results
+```
+
+### Arguments
+```
+-h, --help
+    show this help message and exit
+-m, --model {K7b,1000Genomes_chr21_population,1000Genomes_population,1000Genomes_superpopulation}
+    The model to use for performing admixture.
+-i, --input INPUT [INPUT ...]
+    Path to the input SNP files.
+-if, --input_format {23andme,ancestry,vcf}
+    File format of the input files. Default: 23andme
+-o OUTPUT, --output OUTPUT
+    Path where the output visualization and the log file will be saved.
 ```
 
 ## Development
@@ -43,7 +58,7 @@ This is a well-known problem with conda. If you have [mamba](https://mamba.readt
 mamba env create --name admix -f environment.yml
 ```
 
-### Tasks:
+## Tasks:
 - [x] Configure initial tool
 - [x] Configure environment
 - [x] Build READMEs

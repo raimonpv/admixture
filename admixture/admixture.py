@@ -51,7 +51,19 @@ def parse_args() -> argparse.Namespace:
         nargs="+",
         type=str,
         required=True,
-        help="Path to the input SNP file.",
+        help="Path to the input SNP files.",
+    )
+    parser.add_argument(
+        "-if",
+        "--input_format",
+        type=str,
+        help="File format of the input files. Default: 23andme",
+        choices=[
+            "23andme",
+            "ancestry",
+            "vcf",
+        ],
+        default="23andme",
     )
     parser.add_argument(
         "-o",
@@ -73,13 +85,14 @@ def main():
     logging.info(f"Loading {len(args.input)} samples...")
     data_dict = {}
     for sample_file in args.input:
-        # hacky
-        if "Ancestry" in sample_file:
+        if args.input_format == "ancestry":
             sample_data = ancestry(sample_file)
-        if "vcf" in sample_file:
+        elif args.input_format == "vcf":
             sample_data = vcf(sample_file)
-        else:
+        elif args.input_format == "23andme":
             sample_data = twenty_three(sample_file)
+        else:
+            raise ValueError(f"Unkown input format: {args.input_format}")
         data_dict.update(sample_data)
     logging.info("Samples loaded!")
 
