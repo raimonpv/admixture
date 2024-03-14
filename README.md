@@ -26,20 +26,20 @@ Follow these steps to install `Admixture`:
     ```bash
     make setup
     ```
-4. Finally, activate the conda environment:
+4. Activate the conda environment:
    ```bash
    conda activate admix
    ```
-5. Unzip the file `admixture/models/1000Genomes_pop.txt.zip`. If you are in Linux and have `unzip` installed you can use the following command:
+5. Finally, unzip the file `admixture/models/1000Genomes_pop.txt.zip`. If you are in Linux and have `unzip` installed you can use the following command:
    ```bash
    make unzip_model
    ```
 
 ## Usage
-Usage may vary depending on use case. Main usage entails executing the script `admixture.py`. An example usage is provided below:
+Usage may vary depending on use case. Main usage entails executing the script `admixture/admixture.py`. An example usage is provided below:
 
 ```python
-python admixture.py -m K7b -i ./sample-data/1.txt -o ./results
+python admixture/admixture.py -m K7b -i admixture/sample-data/1.txt -o ./results
 ```
 
 ### Arguments
