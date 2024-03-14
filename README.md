@@ -8,7 +8,7 @@ This is companion code to the final project for CSE 284 (WI24) authored by **Rai
 
 ### Prerequisites
 
-`Admixture` is written in Python and requires several dependencies. A premade conda environment is provided for convenience, or packages can be installed manually. If installing conda for the first time, we suggest using [Miniconda](https://docs.anaconda.com/free/miniconda/) as a lightweight installer.
+`Admixture` is written in Python and requires several dependencies. A premade conda environment is provided for convenience, or packages can be installed manually. If installing conda for the first time, we suggest using [Miniconda](https://docs.anaconda.com/free/miniconda/) as a lightweight installer. 
 
 ### Installation
 
@@ -18,13 +18,21 @@ Follow these steps to install `Admixture`:
     ```bash
     git clone https://github.com/raimonpv/admixture
     ```
-2. Next, configure the conda environment and other dependencies as follows:
+2. Change directory to the cloned respository:
+    ```bash
+    cd admixture
+    ```
+3. Next, configure the conda environment and other dependencies as follows:
     ```bash
     make setup
     ```
-3. Finally, activate the conda environment:
+4. Finally, activate the conda environment:
    ```bash
    conda activate admix
+   ```
+5. Unzip the file `admixture/models/1000Genomes_pop.txt.zip`. If you are in Linux and have `unzip` installed you can use the following command:
+   ```bash
+   make unzip_model
    ```
 
 ## Usage
@@ -49,7 +57,7 @@ python admixture.py -m K7b -i ./sample-data/1.txt -o ./results
 ```
 
 ## Development
-Currently, the package offers two models: [k7b](http://dodecad.blogspot.com/2012/01/k12b-and-k7b-calculators.html) and a model we inferred manually using SNP data from the [1000Genomes project](https://www.internationalgenome.org). Development is ongoing. Details on specific files and functions are available [here](https://github.com/raimonpv/admixture/tree/main/admixture).
+Currently, the package offers two models: [k7b](http://dodecad.blogspot.com/2012/01/k12b-and-k7b-calculators.html) and a model we inferred manually using SNP data from the [1000Genomes project](https://www.internationalgenome.org). Details on specific files and functions are available [here](https://github.com/raimonpv/admixture/tree/main/admixture).
 
 ## Troubleshooting
 > I'm having trouble with the `make setup` command. Specifically, my terminal just says "Solving Environment" and never finishes!
@@ -57,16 +65,6 @@ This is a well-known problem with conda. If you have [mamba](https://mamba.readt
 ```bash
 mamba env create --name admix -f environment.yml
 ```
-
-## Tasks:
-- [x] Configure initial tool
-- [x] Configure environment
-- [x] Build READMEs
-- [x] Implement initial model
-- [x] Implement 1000Genomes model
-- [x] Implement visualization
-- [x] Provide sample data
-- [x] Publish repository
 
 ## Contributing
 We welcome contributions from the community. If you're interested in improving `Admixture`, please follow these steps:
