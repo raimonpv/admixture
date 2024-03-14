@@ -1,0 +1,4 @@
+admixture/models/* linguist-vendored
+admixture/ps2-results/* linguist-vendored
+admixture/sample-data/* linguist-vendored
+admixture/demo.ipynb linguist-vendored
